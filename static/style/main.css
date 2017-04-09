@@ -1,0 +1,36 @@
+$brown: #3e2723;
+$white: #e2e2e2;
+
+$screenMd: 600px;
+$screenLg: 992px;
+
+html {
+  background-color: $brown;
+  font-family: "Times New Roman", Times, serif;
+}
+
+h1, input {
+  color: $white;
+}
+
+button:hover, button.cyan:hover{
+  background-color:rgba(0, 0, 0, 0.6)!important;
+  color: $white;
+}
+
+img {
+  max-width: 100%;
+}
+.album-col{
+  &:nth-child(4n+1){
+    clear: both;
+  }
+  @media only screen and (max-width: $screenLg) {
+    &:nth-child(4n+1){
+      clear: none;
+    }
+    &:nth-child(2n+1){
+      clear: both;
+    }
+  }
+}
