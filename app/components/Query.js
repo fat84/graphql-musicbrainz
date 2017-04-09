@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getArtist } from '../actions/actions.js';
+import { getArtists } from '../actions/actions.js';
 import Loading from './partials/Loading.js';
 import Artist from './partials/Artist.js';
 
 let Query = React.createClass({
   componentDidMount() {
     this.props.dispatch(
-      getArtist('The Beatles')
+      getArtists('The Beatles')
     );
   },
   render() {
@@ -42,7 +42,7 @@ let Query = React.createClass({
               <div className="input-field col s12">
                 <button className="btn btn-flat cyan" onClick={(e) => {
                   e.preventDefault();
-                  dispatch(getArtist(queryText.value))}
+                  dispatch(getArtists(queryText.value))}
                 }>
                   query
                 </button>

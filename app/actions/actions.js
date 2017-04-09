@@ -10,7 +10,7 @@ const finishedRequest = (response) => {
   }
 }
 
-export const getArtist = (bandName) => {
+export const getArtists = (bandName) => {
   return dispatch => {
     dispatch(startingRequest());
     let payload = `query  {
@@ -18,7 +18,7 @@ export const getArtist = (bandName) => {
         artists(query: "${bandName}", first: 10){
           edges{
           	node{
-              name,type
+              id, name, type
             }
         	}
         }
