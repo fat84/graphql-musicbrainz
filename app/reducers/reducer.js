@@ -14,6 +14,16 @@ export const queryReducer = (state = immutableState, action) => {
         return state.set('fetching', false).set('data', Immutable.Map(results));
       }
       return;
+    case 'SHOW_ALBUMS':
+      let albumSet = state.get('show_albums') ? new Set(state.get('show_albums')) : new Set();
+
+      if (albumSet.has(action.artistId)) {
+        albumSet.delete(action.artistId);
+      } else {
+        albumSet.add(action.artistId)
+      }
+
+      return state.set('show_albums', albumSet);
     default:
       return state
   }
