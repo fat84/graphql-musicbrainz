@@ -10,15 +10,31 @@ const finishedRequest = (response) => {
   }
 }
 
-export const getArtists = (bandName) => {
+const showAlbums = (artistId, dispatch) => {
+  return {
+    type: 'SHOW_ALBUMS',
+    artistId: artistId
+  }
+}
+
+
+const getArtists = (bandName, dispatch) => {
   return dispatch => {
     dispatch(startingRequest());
     let payload = `query  {
       search {
-        artists(query: "${bandName}", first: 10){
+        artists(query: "${bandName}", first: 5){
           edges{
           	node{
-              id, name, type
+              id, country, name, type, releases {
+                edges {
+                  node {
+                    id, date, title, coverArt {
+                      front, back
+                    }
+                  }
+                }
+              }
             }
         	}
         }
@@ -36,7 +52,13 @@ export const getArtists = (bandName) => {
         }
       }
     }).then(response => {
+      // console.log('response',response);
       dispatch(finishedRequest(JSON.parse(response)))
     })
   }
+}
+
+export const actions = {
+  showAlbums,
+  getArtists
 }
