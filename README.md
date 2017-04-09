@@ -20,3 +20,6 @@ $ npm install
 $ npm start
 ```
 Go to http://localhost:3000/ in your browser. To use GraphiQL go to http://localhost:3000/graphbrainz
+
+## Demo
+https://graphql-musicbrainz.herokuapp.com/
