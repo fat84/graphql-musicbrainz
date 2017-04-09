@@ -6,12 +6,6 @@ var graphql = require('graphql');
 var axios = require('axios');
 var path = require('path');
 
-var GraphQLSchema = graphql.GraphQLSchema;
-var GraphQLObjectType = graphql.GraphQLObjectType;
-var GraphQLString = graphql.GraphQLString;
-var GraphQLNonNull = graphql.GraphQLNonNull;
-var GraphQLInt = graphql.GraphQLInt;
-
 var graphbrainz = require('graphbrainz');
 
 // configure webpack
@@ -47,7 +41,6 @@ var compiler = webpack({
 // serve bundled
 var app = new WebpackDevServer(compiler, {
   contentBase: '/public/',
-  // proxy: {'/graphql': `http://localhost:${8080}`},
   publicPath: '/static/',
   stats: {colors: true}
 });
