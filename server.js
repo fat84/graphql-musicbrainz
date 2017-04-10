@@ -9,7 +9,7 @@ var path = require('path');
 var graphbrainz = require('graphbrainz');
 
 // configure webpack
-var stylePath = path.join(__dirname, 'static/style/main.css');
+var stylePath = path.join(__dirname, 'style/main.css');
 var compiler = webpack({
   entry: ['./index.js'],
   output: {
@@ -41,7 +41,7 @@ var compiler = webpack({
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        include: /static/,
+        include: /style/,
         use: [
           {
             loader: 'style-loader',
