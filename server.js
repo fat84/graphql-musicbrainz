@@ -19,8 +19,7 @@ var compiler = webpack({
   },
   resolve: {
     alias: {
-      configVariables: path.join(__dirname, 'config.js'),
-      style: stylePath
+      configVariables: path.join(__dirname, 'config.js')
     },
     modules: [path.join(__dirname, 'node_modules')]
   },
