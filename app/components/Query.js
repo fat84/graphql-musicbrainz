@@ -38,7 +38,7 @@ let Query = React.createClass({
 
     let resultsJsx = ( fetchInProgress != true && artists && artists.length>0 ) ?
       <div>
-        <h2>{artistsJsx}</h2>
+        {artistsJsx}
       </div>
     : <div><h2>{fetchMessage}</h2></div>;
 
