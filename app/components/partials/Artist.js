@@ -21,6 +21,8 @@ export default (props) => {
     })
   : <div></div>;
 
+  let buttonText = ( showAlbumJsx ) ? 'Hide Albums' : 'View Albums';
+
 
   let artistJsx = (props.artist) ?
     <li className="collection-item">
@@ -30,7 +32,7 @@ export default (props) => {
         e.preventDefault();
         props.dispatch(actions.showAlbums(props.artist.node.id))}
       }>
-        View Albums
+        {buttonText}
       </button>
       <div className="row">
         {albumJsx}
