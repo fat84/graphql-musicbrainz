@@ -20,7 +20,8 @@ var compiler = webpack({
   resolve: {
     alias: {
       configVariables: path.join(__dirname, 'config.js'),
-      style: stylePath
+      style: stylePath,
+      datePartial: path.join(__dirname, 'app/components/partials/Date.js'),
     },
     modules: [path.join(__dirname, 'node_modules'),path.join(__dirname, 'style')]
   },
