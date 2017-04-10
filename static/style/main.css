@@ -4,9 +4,14 @@ $white: #e2e2e2;
 $screenMd: 600px;
 $screenLg: 992px;
 
+$fontP: 16px;
+
 html {
   background-color: $brown;
   font-family: "Times New Roman", Times, serif;
+}
+p{
+  font-size: $fontP;
 }
 
 h1, input {
