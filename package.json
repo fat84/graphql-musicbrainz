@@ -33,6 +33,7 @@
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "style-loader": "^0.16.1",
     "universal-ga": "^1.1.0",
     "webpack": "^2.3.3",
     "webpack-dev-server": "^2.4.2"
