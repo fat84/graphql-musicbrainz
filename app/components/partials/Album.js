@@ -16,7 +16,7 @@ export default (props) => {
           <span className="card-title">
             {props.album.node.title}
           </span>
-          {props.album.node.date}
+          <p>{props.album.node.date}</p>
         </div>
       </div>
     </div>
