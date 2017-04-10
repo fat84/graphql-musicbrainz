@@ -4,11 +4,32 @@ $white: #e2e2e2;
 $screenMd: 600px;
 $screenLg: 992px;
 
-$fontP: 16px;
+$fontH1: 3.5rem;
+$fontH2: 3rem;
+$fontH3: 2.5rem;
+$fontH4: 2.1rem;
+$fontH5: 1.5rem;
+$fontH6: 1.3rem;
+$fontP: 1.1rem;
 
 html {
   background-color: $brown;
   font-family: "Times New Roman", Times, serif;
+}
+h1{
+  font-size: $fontH1;
+}
+h2{
+  font-size: $fontH2;
+}
+h3{
+  font-size: $fontH3;
+}
+h4{
+  font-size: $fontH4;
+}
+h5{
+  font-size: $fontH5;
 }
 p{
   font-size: $fontP;
