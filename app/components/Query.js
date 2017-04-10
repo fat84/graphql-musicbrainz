@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { actions } from '../actions/actions.js';
 import Loading from './partials/Loading.js';
 import Artist from './partials/Artist.js';
-import glob from 'style';
+// import glob from 'style';
 
 let Query = React.createClass({
   componentDidMount() {
