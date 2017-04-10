@@ -22,7 +22,7 @@ var compiler = webpack({
       configVariables: path.join(__dirname, 'config.js'),
       style: stylePath
     },
-    modules: [path.join(__dirname, 'node_modules')]
+    modules: [path.join(__dirname, 'node_modules'),path.join(__dirname, 'style')]
   },
   plugins: [
     require('precss'),
