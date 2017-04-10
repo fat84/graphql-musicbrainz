@@ -1,4 +1,5 @@
 import React from 'react';
+import Date from './date.js';
 
 export default (props) => {
   let coverJsx = (props.album && props.album.node && props.album.node.coverArt && props.album.node.coverArt.front) ?
@@ -6,6 +7,10 @@ export default (props) => {
     <img src={props.album.node.coverArt.front}/>
   </div>
   : <div></div>;
+
+  let dateJsx = (props.album && props.album.node && props.album.node.date) ?
+    <Date date={props.album.node.date}/>
+  : <span></span>
 
 
   return (
@@ -16,7 +21,7 @@ export default (props) => {
           <span className="card-title">
             {props.album.node.title}
           </span>
-          <p>{props.album.node.date}</p>
+          <p>{dateJsx}</p>
         </div>
       </div>
     </div>
