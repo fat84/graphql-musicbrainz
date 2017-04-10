@@ -26,10 +26,19 @@ const getArtists = (bandName, dispatch) => {
         artists(query: "${bandName}", first: 5){
           edges{
           	node{
-              id, country, name, type, releases {
+              id, country, name, type,
+              releases {
                 edges {
                   node {
-                    id, date, title, coverArt {
+                    id, date, title,
+                    labels {
+                      edges {
+                        node {
+                          id, name
+                        }
+                      }
+                    },
+                    coverArt {
                       front, back
                     }
                   }
@@ -52,7 +61,6 @@ const getArtists = (bandName, dispatch) => {
         }
       }
     }).then(response => {
-      // console.log('response',response);
       dispatch(finishedRequest(JSON.parse(response)))
     })
   }
