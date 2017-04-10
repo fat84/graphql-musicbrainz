@@ -12,10 +12,9 @@ let Query = React.createClass({
   },
   render() {
     let dispatch = this.props.dispatch;
-    let fetchInProgress = String(this.props.store.get('fetching'));
+    let fetchInProgress = this.props.store.get('fetching');
     let queryText;
     let artists = this.props.store ? this.props.store.get('data').toObject().edges : null;
-
     let loadingJsx = (fetchInProgress === true) ?
       <div>
         <Loading />
@@ -35,11 +34,13 @@ let Query = React.createClass({
       </ul>
     : <div></div>;
 
+    let fetchMessage =  fetchInProgress ? 'Searching...' : 'No Results';
+
     let resultsJsx = ( fetchInProgress != true && artists && artists.length>0 ) ?
       <div>
-        {artistsJsx}
+        <h2>{artistsJsx}</h2>
       </div>
-    : <div>No Results</div>;
+    : <div><h2>{fetchMessage}</h2></div>;
 
     return (
       <div>
