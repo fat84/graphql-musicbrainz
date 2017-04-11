@@ -18,58 +18,67 @@ const showAlbums = (artistId, dispatch) => {
   }
 }
 
-const getArtists = (bandName, dispatch) => {
-  return dispatch => {
-    dispatch(startingRequest());
-    let payload = `query  {
-      search {
-        artists(query: "${bandName}", first: 3){
-          edges{
-          	node{
-              id, country, name, type,
-              releases(status:OFFICIAL) {
-                edges {
-                  node {
-                    id, date, title,
-                    labels {
-                      edges {
-                        node {
-                          id, name
-                        }
+const makePayload = (bandName, cursor) => {
+  let afterCursor = cursor ? cursor : null;
+  return `query  {
+    search {
+      artists(query: "${bandName}", first: 1, after: "${afterCursor}" ){
+        edges{
+          cursor,
+          node{
+            id, country, name, type,
+            releases(status:OFFICIAL) {
+              edges {
+                node {
+                  id, date, title,
+                  labels {
+                    edges {
+                      node {
+                        id, name
                       }
-                    },
-                    media {
-                      title
-                      format
-                      formatID
-                      position
-                      trackCount
-                    },
-                    coverArt {
-                      front, back
                     }
+                  },
+                  media {
+                    title
+                    format
+                    formatID
+                    position
+                    trackCount
+                  },
+                  coverArt {
+                    front, back
                   }
                 }
               }
             }
-        	}
+          }
         }
       }
-    }`;
+    }
+  }`
+}
 
-    return new Promise(function(resolve, reject) {
-      let request=new XMLHttpRequest();
-      request.open('POST', '/graphbrainz', true);
-      request.setRequestHeader('Content-Type', 'application/graphql');
-      request.send(payload);
-      request.onreadystatechange = () => {
-        if (request.readyState === 4) {
-          resolve(request.responseText)
-        }
+const sendGraphRequest = (payload, dispatch) => {
+  new Promise(function(resolve, reject) {
+    let request=new XMLHttpRequest();
+    request.open('POST', '/graphbrainz', true);
+    request.setRequestHeader('Content-Type', 'application/graphql');
+    request.send(payload);
+    request.onreadystatechange = () => {
+      if (request.readyState === 4) {
+        resolve(request.responseText)
       }
-    }).then(response => {
-      dispatch(finishedRequest(JSON.parse(response)))
-    })
+    }
+  }).then(response => {
+    dispatch(finishedRequest(JSON.parse(response)))
+  })
+}
+
+const getArtists = (bandName, dispatch) => {
+  return dispatch => {
+    dispatch(startingRequest());
+    let payload = makePayload(bandName);
+    return sendGraphRequest(payload, dispatch);
   }
 }
 
