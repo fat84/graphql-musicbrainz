@@ -1,7 +1,8 @@
 import Immutable from 'immutable';
 const immutableState = Immutable.Map({
   fetching: false,
-  data: Immutable.Map({})
+  data: Immutable.Map({}),
+  show_albums: new Set()
 })
 
 export const queryReducer = (state = immutableState, action) => {
@@ -15,16 +16,16 @@ export const queryReducer = (state = immutableState, action) => {
       }
       return;
     case 'SHOW_ALBUMS':
-      let albumSet = state.get('show_albums') ? new Set(state.get('show_albums')) : new Set();
+      let albumSet = new Set(state.get('show_albums'));
 
       if (albumSet.has(action.artistId)) {
         albumSet.delete(action.artistId);
       } else {
-        albumSet.add(action.artistId)
+        albumSet.add(action.artistId);
       }
 
       return state.set('show_albums', albumSet);
     default:
-      return state
+      return state;
   }
 }
