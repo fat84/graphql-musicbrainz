@@ -3,6 +3,7 @@ const startingRequest = () => {
     type: 'STARTING_REQUEST'
   }
 }
+
 const finishedRequest = (response) => {
   return {
     type: 'FINISHED_REQUEST',
@@ -17,17 +18,16 @@ const showAlbums = (artistId, dispatch) => {
   }
 }
 
-
 const getArtists = (bandName, dispatch) => {
   return dispatch => {
     dispatch(startingRequest());
     let payload = `query  {
       search {
-        artists(query: "${bandName}", first: 5){
+        artists(query: "${bandName}", first: 3){
           edges{
           	node{
               id, country, name, type,
-              releases {
+              releases(status:OFFICIAL) {
                 edges {
                   node {
                     id, date, title,
@@ -37,6 +37,13 @@ const getArtists = (bandName, dispatch) => {
                           id, name
                         }
                       }
+                    },
+                    media {
+                      title
+                      format
+                      formatID
+                      position
+                      trackCount
                     },
                     coverArt {
                       front, back
