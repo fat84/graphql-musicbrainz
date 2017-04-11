@@ -15,11 +15,17 @@ export default (props) => {
 
   let labelsJsx = (props.album && props.album.node && props.album.node.labels && props.album.node.labels.edges&& props.album.node.labels.edges.length>0) ?
     props.album.node.labels.edges.map((label, i) => {
-      console.log('label', label);
       return <div>{label.node.name}</div>
     })
   : <div></div>;
 
+  let mediaJsx = (props.album && props.album.node && props.album.node.media) ?
+    props.album.node.media.map((mediaEl) => {
+      let mediaFormat = mediaEl.format ? mediaEl.format + ' | ' : '';
+      let trackWord = (mediaEl.trackCount && mediaEl.trackCount > 1) ? 'Tracks' : 'Track'
+      return <li>{mediaFormat}{mediaEl.trackCount} {trackWord}</li>
+    })
+  : <div></div>;
 
   return (
     <div className="col s12 m6 l3 album-col">
@@ -30,6 +36,7 @@ export default (props) => {
             {props.album.node.title}
           </span>
           <p>{dateJsx}</p>
+          <ul>{mediaJsx}</ul>
           {labelsJsx}
         </div>
       </div>
