@@ -5,45 +5,48 @@ import Loading from './partials/Loading.js';
 import Artist from './partials/Artist.js';
 import glob from 'style';
 
-let Query = React.createClass({
+
+class Query extends React.Component {
   componentDidMount() {
     this.props.dispatch(
       actions.getArtists('The Beatles')
     );
-  },
+  }
+
   render() {
     let dispatch = this.props.dispatch;
     let fetchInProgress = this.props.store.get('fetching');
     let artistName = this.props.store.get('artist_name');
     let queryText;
     let data = ( this.props.store && this.props.store.get('data') ) ? this.props.store.get('data').toObject() : null;
+    let searchedArtist = ( this.props.store && this.props.store.get('artist_name') ) ? this.props.store.get('artist_name') : null;
     let artists = data ? data.edges : null;
     let cursor = ( data && data.pageInfo && data.pageInfo.endCursor ) ? data.pageInfo.endCursor : null;
+    let fetchMessage =  fetchInProgress ? 'Searching...' + searchedArtist : 'No Results';
+
+    // Pagination
     let firstArg = configVariables.query.first;
-
     let paginationLocation = ( this.props.store && this.props.store.get('pagination_location') ) ? this.props.store.get('pagination_location') : null;
-
     let currentResultsLoc = firstArg*paginationLocation;
-
     let locationJsx = paginationLocation ? <span>{currentResultsLoc}</span> : <span></span>;
 
+    // Loading
     let loadingJsx = (fetchInProgress === true) ?
       <div><Loading /></div>
     : <div></div>;
 
+    // Results
     let totalResultsJsx = ( data && data.totalCount ) ?
       <span>{data.totalCount.toLocaleString()}</span>
     : <span></span>;
+    let resultsWord =  (data.totalCount && data.totalCount > 1) ? 'Results' : 'Result';
 
-
+    // Artists List
     let artistsList = artists ? artists.map(
       (artist, i) => {
         return <Artist artist={artist} store={this.props.store} key={i} dispatch={dispatch}/>;
       }
     ) : null;
-
-    let resultsWord =  (data.totalCount && data.totalCount > 1) ? 'Results' : 'Result';
-
     let artistsJsx = (artists && artists.length > 0) ?
       <ul className="collection with-header">
       <li className="collection-header"><h2>{locationJsx} of {totalResultsJsx} {resultsWord}</h2></li>
@@ -51,12 +54,9 @@ let Query = React.createClass({
       </ul>
     : <div></div>;
 
-    let fetchMessage =  fetchInProgress ? 'Searching...' : 'No Results';
-
     let resultsJsx = ( fetchInProgress != true && artists && artists.length>0 ) ?
       <div>
         {artistsJsx}
-
         <div className="row">
           <div className="col s12">
             <button className="btn-flat waves-effect waves-light cyan lighten-1" onClick={(e) => {
@@ -97,7 +97,7 @@ let Query = React.createClass({
       </div>
     )
   }
-});
+}
 
 const mapStateToProps = (state) => {
   return {
