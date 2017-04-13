@@ -11,15 +11,15 @@ const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware
 )(createStore)
 
-const Main = React.createClass({
-  render: () => {
+class Main extends React.Component {
+  render() {
     return (
       <div>
          <QueryContainer />
       </div>
     )
   }
-});
+}
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(queryReducer)}>
