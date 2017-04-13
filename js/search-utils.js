@@ -1,28 +1,10 @@
-const startingRequest = () => {
-  return {
-    type: 'STARTING_REQUEST'
-  }
-}
-
-const finishedRequest = (response) => {
-  return {
-    type: 'FINISHED_REQUEST',
-    response: response
-  }
-}
-
-const showAlbums = (artistId, dispatch) => {
-  return {
-    type: 'SHOW_ALBUMS',
-    artistId: artistId
-  }
-}
-
-const makePayload = (bandName, cursor) => {
+const makePayload = (artistName, cursor) => {
   let afterCursor = cursor ? cursor : null;
+  let firstArg = configVariables.query.first;
+
   return `query  {
     search {
-      artists(query: "${bandName}", first: 1, after: "${afterCursor}" ){
+      artists(query: "artist:${artistName}", first: ${firstArg}, after: "${afterCursor}" ){
         edges{
           cursor,
           node{
@@ -52,13 +34,17 @@ const makePayload = (bandName, cursor) => {
               }
             }
           }
+        },
+        totalCount,
+        pageInfo{
+          endCursor
         }
       }
     }
   }`
 }
 
-const sendGraphRequest = (payload, dispatch) => {
+const sendGraphRequest = (payload, dispatch, finishedRequest) => {
   new Promise(function(resolve, reject) {
     let request=new XMLHttpRequest();
     request.open('POST', '/graphbrainz', true);
@@ -74,15 +60,9 @@ const sendGraphRequest = (payload, dispatch) => {
   })
 }
 
-const getArtists = (bandName, dispatch) => {
-  return dispatch => {
-    dispatch(startingRequest());
-    let payload = makePayload(bandName);
-    return sendGraphRequest(payload, dispatch);
-  }
+const searchUtils = {
+  sendGraphRequest,
+  makePayload
 }
 
-export const actions = {
-  showAlbums,
-  getArtists
-}
+module.exports = searchUtils;
