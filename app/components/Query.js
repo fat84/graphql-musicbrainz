@@ -14,13 +14,27 @@ let Query = React.createClass({
   render() {
     let dispatch = this.props.dispatch;
     let fetchInProgress = this.props.store.get('fetching');
+    let artistName = this.props.store.get('artist_name');
     let queryText;
-    let artists = this.props.store ? this.props.store.get('data').toObject().edges : null;
+    let data = ( this.props.store && this.props.store.get('data') ) ? this.props.store.get('data').toObject() : null;
+    let artists = data ? data.edges : null;
+    let cursor = ( data && data.pageInfo && data.pageInfo.endCursor ) ? data.pageInfo.endCursor : null;
+    let firstArg = configVariables.query.first;
+
+    let paginationLocation = ( this.props.store && this.props.store.get('pagination_location') ) ? this.props.store.get('pagination_location') : null;
+
+    let currentResultsLoc = firstArg*paginationLocation;
+
+    let locationJsx = paginationLocation ? <span>{currentResultsLoc}</span> : <span></span>;
+
     let loadingJsx = (fetchInProgress === true) ?
-      <div>
-        <Loading />
-      </div>
+      <div><Loading /></div>
     : <div></div>;
+
+    let totalResultsJsx = ( data && data.totalCount ) ?
+      <span>{data.totalCount.toLocaleString()}</span>
+    : <span></span>;
+
 
     let artistsList = artists ? artists.map(
       (artist, i) => {
@@ -28,9 +42,11 @@ let Query = React.createClass({
       }
     ) : null;
 
-    let artistsJsx =  (artists && artists.length > 0) ?
+    let resultsWord =  (data.totalCount && data.totalCount > 1) ? 'Results' : 'Result';
+
+    let artistsJsx = (artists && artists.length > 0) ?
       <ul className="collection with-header">
-      <li className="collection-header"><h2>Results</h2></li>
+      <li className="collection-header"><h2>{locationJsx} of {totalResultsJsx} {resultsWord}</h2></li>
       {artistsList}
       </ul>
     : <div></div>;
@@ -40,6 +56,17 @@ let Query = React.createClass({
     let resultsJsx = ( fetchInProgress != true && artists && artists.length>0 ) ?
       <div>
         {artistsJsx}
+
+        <div className="row">
+          <div className="col s12">
+            <button className="btn-flat waves-effect waves-light cyan lighten-1" onClick={(e) => {
+              e.preventDefault();
+              dispatch(actions.getNextArtists(artistName, cursor))}
+            }>
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     : <div><h2>{fetchMessage}</h2></div>;
 
