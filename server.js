@@ -22,6 +22,7 @@ var compiler = webpack({
       configVariables: path.join(__dirname, 'config.js'),
       style: stylePath,
       datePartial: path.join(__dirname, 'app/components/partials/Date.js'),
+      searchUtils: path.join(__dirname, 'js/search-utils.js')
     },
     modules: [path.join(__dirname, 'node_modules'),path.join(__dirname, 'style')]
   },
@@ -76,4 +77,4 @@ var app = new WebpackDevServer(compiler, {
 app.use('/graphbrainz', graphbrainz.default());
 app.use('/', express.static('static'));
 app.listen(process.env.PORT || 3000);
-console.log('The App Server is running.')
+console.log('The App Server is running.');
